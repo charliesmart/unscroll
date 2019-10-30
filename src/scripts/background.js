@@ -1,4 +1,5 @@
 import defaultSites from '../data/default_sites.json';
+import { addMinutes } from 'date-fns';
 
 /*
  * On install, save default list of blocked sites
@@ -20,6 +21,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       // Get our current list of blocked sites from storage and check
       // if it includes the current hostname
       chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], ({BLOCKED_SITES, UNLOCKED_SITES}) => {
+        console.log(UNLOCKED_SITES)
         // If the hostname is in the block list, render the block page
         if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
           renderBlocker();
@@ -28,6 +30,22 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
   }
 );
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.hostname) {
+    unblock(request.hostname);
+  }
+})
+
+function unblock(hostname) {
+  hostname = hostname.replace(/^www\./,'')
+  chrome.storage.sync.get(['UNLOCKED_SITES'], function({UNLOCKED_SITES}) {
+    UNLOCKED_SITES[hostname] = addMinutes(new Date(), 5).valueOf()
+    chrome.storage.sync.set({ 
+      UNLOCKED_SITES: UNLOCKED_SITES
+    });
+  });
+}
 
 function renderBlocker() {
   chrome.tabs.executeScript({
@@ -45,8 +63,7 @@ function renderBlocker() {
  */
 function isCurrentlyBlocked(hostname, blocked, unblocked) {
   hostname = hostname.replace(/^www\./,'')
-  console.log(unblocked, blocked, hostname)
-  let isUnlocked = unblocked[hostname] && unblocked[hostname] > Date.now();
+  let isUnlocked = unblocked[hostname] && Date.now() < unblocked[hostname];
   return blocked.includes(hostname) && !isUnlocked; 
 }
 

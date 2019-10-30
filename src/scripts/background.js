@@ -40,6 +40,7 @@ function handleBlock(url) {
   // if it includes the current hostname
   chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], ({BLOCKED_SITES, UNLOCKED_SITES}) => {
     // If the hostname is in the block list, render the block page
+    console.log(UNLOCKED_SITES);
     if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
       renderBlocker();
     }

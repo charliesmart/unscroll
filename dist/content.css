@@ -1,9 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css?family=Heebo:400,900&display=swap');
 .focus__screen {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: #ede7d9;
+  background-color: #fcf7f8;
   z-index: 999999999;
   top: 0;
   left: 0;
+}
+.focus__screen__header {
+  font-family: 'Heebo', sans-serif;
+  color: #1f2d3d;
+  max-width: 500px;
+  margin: auto;
 }

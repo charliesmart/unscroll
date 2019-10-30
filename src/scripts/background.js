@@ -64,7 +64,14 @@ function unblock(hostname) {
     UNLOCKED_SITES[hostname] = addMinutes(new Date(), 5).valueOf()
     chrome.storage.sync.set({ 
       UNLOCKED_SITES: UNLOCKED_SITES
-    });
+    }, refreshPage);
+  });
+}
+
+function refreshPage() {
+  chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+    var code = 'window.location.reload();';
+    chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
   });
 }
 

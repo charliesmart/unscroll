@@ -16633,25 +16633,33 @@ chrome.runtime.onInstalled.addListener(function () {
  */
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  console.log(changeInfo);
+  var url;
 
   if (changeInfo.url) {
     // We need to get the hostname of the URL, so we use the
     // URL constructor to access it
-    var url = new URL(changeInfo.url);
-    handleBlock(url);
+    url = new URL(changeInfo.url);
   } else if (changeInfo.title && changeInfo.title.includes('http')) {
-    var _url = new URL(changeInfo.title);
-
-    handleBlock(_url);
+    // On page refresh, the URL is in the title variable instead of URL
+    url = new URL(changeInfo.title);
   }
+
+  if (url) handleBlock(url);
 });
+/*
+ * Activate blocker when toggline between already loaded tabs
+ */
+
 chrome.tabs.onActivated.addListener(function () {
   chrome.tabs.getSelected(null, function (tab) {
     var url = new URL(tab.url);
     handleBlock(url);
   });
 });
+/*
+ * Listen for unblock requests from the content script
+ */
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.hostname) {
     unblock(request.hostname);
@@ -16664,9 +16672,8 @@ function handleBlock(url) {
   chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], function (_ref) {
     var BLOCKED_SITES = _ref.BLOCKED_SITES,
         UNLOCKED_SITES = _ref.UNLOCKED_SITES;
-    // If the hostname is in the block list, render the block page
-    console.log(UNLOCKED_SITES);
 
+    // If the hostname is in the block list, render the block page
     if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
       renderBlocker();
     }
@@ -16680,6 +16687,18 @@ function unblock(hostname) {
     UNLOCKED_SITES[hostname] = (0, _dateFns.addMinutes)(new Date(), 5).valueOf();
     chrome.storage.sync.set({
       UNLOCKED_SITES: UNLOCKED_SITES
+    }, refreshPage);
+  });
+}
+
+function refreshPage() {
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }, function (arrayOfTabs) {
+    var code = 'window.location.reload();';
+    chrome.tabs.executeScript(arrayOfTabs[0].id, {
+      code: code
     });
   });
 }
@@ -16701,7 +16720,6 @@ function renderBlocker() {
 
 function isCurrentlyBlocked(hostname, blocked, unblocked) {
   hostname = hostname.replace(/^www\./, '');
-  console.log(Date.now(), unblocked[hostname]);
   var isUnlocked = unblocked[hostname] && Date.now() < unblocked[hostname];
   return blocked.includes(hostname) && !isUnlocked;
 }

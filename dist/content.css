@@ -1,17 +1,74 @@
 
-@import url('https://fonts.googleapis.com/css?family=Heebo:400,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap');
 .focus__screen {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: #fcf7f8;
+  background-color: #f4f5fa;
   z-index: 999999999;
   top: 0;
   left: 0;
 }
 .focus__screen__header {
-  font-family: 'Heebo', sans-serif;
-  color: #1f2d3d;
+  font-family: 'Rubik', sans-serif;
+  color: #3e4b62;
   max-width: 500px;
   margin: auto;
+}
+.focus__screen .prompt {
+  pointer-events: none;
+  font-family: 'Rubik', sans-serif;
+  color: #3e4b62;
+  margin: auto;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 34px;
+  max-width: 500px;
+  margin-bottom: 15px;
+}
+.focus__screen .prompt .correct {
+  opacity: 0.4;
+}
+.focus__screen .prompt .incorrect {
+  color: #f00;
+}
+.focus__screen button {
+  border: none;
+  box-shadow: 0 10px 20px rgba(62,75,98,0.09), 0 6px 6px rgba(62,75,98,0.13);
+  color: #f4f5fa;
+  background-color: #6174f9;
+  padding: 15px;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
+  font-size: 16px;
+  margin-top: 20px;
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+  transition: 0.3s ease;
+}
+.focus__screen button.active {
+  opacity: 1;
+  pointer-events: all;
+  cursor: pointer;
+}
+.focus__screen textarea {
+  background-color: #fff;
+  font-family: 'Rubik', sans-serif;
+  color: #3e4b62;
+  margin: auto;
+  padding: 15px;
+  display: block;
+  border-radius: 5px;
+  font-size: 34px;
+  width: 500px;
+  height: 100px;
+  box-shadow: 0 10px 20px rgba(62,75,98,0.09), 0 6px 6px rgba(62,75,98,0.13);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+.focus__screen textarea:focus {
+  outline: none;
+  border: 2px solid #6174f9;
 }

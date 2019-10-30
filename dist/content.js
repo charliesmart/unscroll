@@ -988,7 +988,69 @@ if ("production" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.production.min.js":"MtQn"}],"tGjN":[function(require,module,exports) {
+},{"./cjs/react-dom.production.min.js":"MtQn"}],"dBao":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Quote = function Quote(_ref) {
+  var prompt = _ref.prompt,
+      userEntry = _ref.userEntry;
+  return _react.default.createElement("p", {
+    className: "prompt"
+  }, prompt.split('').map(function (letter, i) {
+    var userLetter = userEntry[i];
+    var spanClass;
+
+    if (i >= userEntry.length) {
+      spanClass = 'untyped';
+    } else if (letter === userEntry[i]) {
+      spanClass = 'correct';
+    } else {
+      spanClass = 'incorrect';
+    }
+
+    return _react.default.createElement("span", {
+      key: letter + i,
+      className: spanClass
+    }, letter);
+  }));
+};
+
+var _default = Quote;
+exports.default = _default;
+},{"react":"ccIB"}],"BWZN":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Input = function Input(_ref) {
+  var value = _ref.value,
+      onChange = _ref.onChange;
+  return _react.default.createElement("textarea", {
+    type: "text",
+    value: value,
+    onChange: onChange
+  });
+};
+
+var _default = Input;
+exports.default = _default;
+},{"react":"ccIB"}],"tGjN":[function(require,module,exports) {
 module.exports = ["Jacky can now give six big tips from the old quiz.", "Lovak won the squad prize cup for sixty big jumps.", "J. Fox made five quick plays to win the big prize.", "Foxy diva Jennifer Lopez wasn’t baking my quiche.", "Cozy lummox gives smart squid who asks for job pen.", "By Jove, my quick study of lexicography won a prize.", "Levi Lentz packed my bag with six quarts of juice.", "Painful zombies quickly watch a jinxed graveyard.", "Fax back Jim’s Gwyneth Paltrow video quiz.", "As quirky joke, chefs won’t pay devil magic zebra tax.", "My girl wove six dozen plaid jackets before she quit.", "Then a cop quizzed Mick Jagger’s ex-wives briefly.", "Six big devils from Japan quickly forgot how to waltz.", "“Who am taking the ebonics quiz?”, the prof jovially axed.", "Why shouldn’t a quixotic Kazakh vampire jog barefoot?", "Grumpy wizards make a toxic brew for the jovial queen.", "Sixty zips were quickly picked from the woven jute bag.", "Big July earthquakes confound zany experimental vow.", "Foxy parsons quiz and cajole the lovably dim wiki-girl.", "Cute, kind, jovial, foxy physique, amazing beauty? Wowser!", "Have a pick: twenty-six letters — no forcing a jumbled quiz!", "A very big box sailed up then whizzed quickly from Japan.", "Battle of Thermopylae: Quick javelin grazed wry Xerxes.", "Jack quietly moved up front and seized the big ball of wax.", "Few black taxis drive up major roads on quiet hazy nights.", "Just poets wax boldly as kings and queens march over fuzz.", "Bored? Craving a pub quiz fix? Why, just come to the Royal Oak!", "Quincy Pondexter blocked five jams against the Wizards!", "Crazy Frederick bought many very exquisite opal jewels.", "A quivering Texas zombie fought republic linked jewelry.", "Grumpy wizards make toxic brew for the evil queen and jack.", "The job of waxing linoleum frequently peeves chintzy kids.", "Back in June we delivered oxygen equipment of the same size.", "Just keep examining every low bid quoted for zinc etchings.", "How razorback-jumping frogs can level six piqued gymnasts!", "A quick movement of the enemy will jeopardize six gunboats.", "All questions asked by five watched experts amaze the judge.", "Bobby Klun awarded Jayme sixth place for her very high quiz.", "The wizard quickly jinxed the gnomes before they vaporized.", "Zelda might fix the job growth plans very quickly on Monday.", "Zack Gappow saved the job requirement list for the six boys.", "Jackie will budget for the most expensive zoology equipment.", "Quirky spud boys can jam after zapping five worthy Polysixes.", "Jim quickly realized that the beautiful gowns are expensive."];
 },{}],"od3n":[function(require,module,exports) {
 "use strict";
@@ -999,6 +1061,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _Quote = _interopRequireDefault(require("./Quote"));
+
+var _Input = _interopRequireDefault(require("./Input"));
 
 var _pangrams = _interopRequireDefault(require("../../data/pangrams.json"));
 
@@ -1018,9 +1084,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1039,12 +1105,24 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Screen).call(this, props));
     _this.state = {
       quote: _pangrams.default[Math.floor(Math.random() * _pangrams.default.length)],
-      unlockMin: 10
+      userEntry: '',
+      unlockMin: 10,
+      host: window.location.hostname.replace(/^www\./, ''),
+      inputComplete: false
     };
+    _this.updateUserEntry = _this.updateUserEntry.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Screen, [{
+    key: "updateUserEntry",
+    value: function updateUserEntry(e) {
+      this.setState({
+        userEntry: e.target.value,
+        inputComplete: e.target.value === this.state.quote
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var removeScreen = this.props.removeScreen;
@@ -1052,9 +1130,16 @@ function (_Component) {
         className: "focus__screen"
       }, _react.default.createElement("h1", {
         className: "focus__screen__header"
-      }, "Are you sure you want to do that?"), _react.default.createElement("p", null, this.state.quote), _react.default.createElement("button", {
-        onClick: removeScreen
-      }, "Yes, I'm sure"));
+      }, "Are you sure you want to do that?"), _react.default.createElement(_Quote.default, {
+        prompt: this.state.quote,
+        userEntry: this.state.userEntry
+      }), _react.default.createElement(_Input.default, {
+        value: this.state.userEntry,
+        onChange: this.updateUserEntry
+      }), _react.default.createElement("button", {
+        className: this.state.inputComplete && 'active',
+        onClick: this.props.removeScreen
+      }, "Continue to ", this.state.host, " \u2192"));
     }
   }]);
 
@@ -1063,7 +1148,7 @@ function (_Component) {
 
 var _default = Screen;
 exports.default = _default;
-},{"react":"ccIB","../../data/pangrams.json":"tGjN"}],"pILq":[function(require,module,exports) {
+},{"react":"ccIB","./Quote":"dBao","./Input":"BWZN","../../data/pangrams.json":"tGjN"}],"pILq":[function(require,module,exports) {
 "use strict";
 
 require("../styles/main.styl");

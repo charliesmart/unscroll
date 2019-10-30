@@ -16634,6 +16634,8 @@ chrome.runtime.onInstalled.addListener(function () {
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url;
+  console.log(changeInfo);
+  console.log(tab);
 
   if (changeInfo.url) {
     // We need to get the hostname of the URL, so we use the

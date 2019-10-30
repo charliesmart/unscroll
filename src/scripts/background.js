@@ -15,6 +15,10 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     let url;
 
+    console.log(changeInfo)
+
+    console.log(tab)
+
     if (changeInfo.url) {
       // We need to get the hostname of the URL, so we use the
       // URL constructor to access it

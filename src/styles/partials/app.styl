@@ -12,3 +12,62 @@
     color $darkGray
     max-width 500px
     margin auto
+
+  .prompt
+    pointer-events none
+    //background-color white
+    font-family $sans
+    color $darkGray
+    margin auto
+    padding 15px
+    border-radius 5px
+    font-size 34px
+    max-width 500px
+    //box-shadow 0 10px 20px rgba(#3E4B62,0.09), 0 6px 6px rgba(#3E4B62,0.13)
+    margin-bottom 15px
+    
+    .correct
+      opacity 0.4
+      
+    .incorrect
+      color red
+      
+  button
+    border none
+    box-shadow 0 10px 20px rgba(#3E4B62,0.09), 0 6px 6px rgba(#3E4B62,0.13)
+    color $lightGray
+    background-color #6174F9
+    padding 15px
+    border-radius 5px
+    display block
+    margin auto
+    font-size 16px
+    margin-top 20px
+    opacity 0.4
+    pointer-events none
+    cursor not-allowed
+    transition 0.3s ease
+
+    &.active
+      opacity 1
+      pointer-events all
+      cursor pointer
+
+  textarea
+    background-color white
+    font-family $sans
+    color $darkGray
+    margin auto
+    padding 15px
+    display block
+    border-radius 5px
+    font-size 34px
+    width 500px
+    height 100px
+    box-shadow 0 10px 20px rgba(#3E4B62,0.09), 0 6px 6px rgba(#3E4B62,0.13)
+    border 2px solid transparent
+    transition all 0.2s ease
+    
+    &:focus
+      outline none
+      border 2px solid #6174F9

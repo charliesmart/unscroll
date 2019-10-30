@@ -11,6 +11,10 @@
       "http://*/*",
       "https://*/*"
     ],
+    "web_accessible_resources": [
+      "*.woff*",
+      "https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap"
+    ],
     "background": {
       "scripts": ["background.js"],
       "persistent": true

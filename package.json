@@ -1,0 +1,30 @@
+{
+  "name": "focus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build_background && npm run build_content && npm run copy",
+    "build_background": "parcel build src/scripts/background.js -d dist -o background.js --no-source-maps --no-minify --no-cache",
+    "build_content": "parcel build src/scripts/content.js -d dist -o content.js --no-source-maps --no-minify --no-cache",
+    "copy": "cp ./src/manifest.json ./dist/manifest.json",
+    "watch": "parcel watch src/scripts/background/index.js src/scripts/content/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "parcel-bundler": "^1.12.4",
+    "stylus": "^0.54.7"
+  },
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  }
+}

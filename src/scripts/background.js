@@ -1,10 +1,10 @@
+import defaultSites from '../data/default_sites.json';
+
 /*
  * On install, save default list of blocked sites
  */
 chrome.runtime.onInstalled.addListener(function() {
-  fetch('./data/default_sites.json')
-    .then(d => d.json())
-    .then(setDefaultSites)
+  setDefaultSites(defaultSites);
 });
 
 /*
@@ -31,7 +31,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 function renderBlocker() {
   chrome.tabs.executeScript({
-    file: 'renderBlocker.js'
+    file: 'content.js'
   });
 }
 

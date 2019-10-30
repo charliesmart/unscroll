@@ -1,0 +1,25 @@
+  {
+    "name": "Getting Started Example",
+    "version": "1.0",
+    "description": "Focuser",
+    "permissions": [
+      "storage",
+      "webRequestBlocking",
+      "webRequest",
+      "activeTab",
+      "tabs",
+      "http://*/*",
+      "https://*/*"
+    ],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": true
+    },
+    "content_scripts": [
+      {
+        "matches": ["http://*/*", "https://*/*"],
+        "css": ["content.css"]
+      }
+    ],
+    "manifest_version": 2
+  }

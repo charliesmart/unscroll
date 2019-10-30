@@ -19,22 +19,41 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       
       // Get our current list of blocked sites from storage and check
       // if it includes the current hostname
-      chrome.storage.sync.get(['BLOCKED_SITES'], (data) => {
+      chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], ({BLOCKED_SITES, UNLOCKED_SITES}) => {
         // If the hostname is in the block list, render the block page
-        if (data.BLOCKED_SITES.indexOf(hostname) >= 0) {
-          console.log('blocked');
+        if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
+          renderBlocker();
         }
       })
     }
   }
 );
 
+function renderBlocker() {
+  chrome.tabs.executeScript({
+    file: 'renderBlocker.js'
+  });
+}
+
+/*
+ * Checks a hostname against a block list and unblock list to 
+ * determine whether it should be blocked.
+ * @param {string} hostname - The current hostname
+ * @param {string[]} blocked - A list of blocked hostnames
+ * @param {string[]} unblocked - A list of currently unblocked hostnames
+ * @return {boolean} - Whether or not the site is currently blocked
+ */
+function isCurrentlyBlocked(hostname, blocked, unblocked) {
+  return blocked.includes(hostname) && !unblocked.includes(hostname); 
+}
+
 /*
  * Use chrome storage to set initial list of blocked sites
- * @param {string[]} - List of default blocked sites
+ * @param {string[]} defaultSites - List of default blocked sites
  */
 function setDefaultSites(defaultSites) {
   chrome.storage.sync.set({
-    BLOCKED_SITES: defaultSites
+    BLOCKED_SITES: defaultSites,
+    UNLOCKED_SITES: [],
   });
 }

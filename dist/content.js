@@ -988,7 +988,9 @@ if ("production" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.production.min.js":"MtQn"}],"od3n":[function(require,module,exports) {
+},{"./cjs/react-dom.production.min.js":"MtQn"}],"tGjN":[function(require,module,exports) {
+module.exports = ["Jacky can now give six big tips from the old quiz.", "Lovak won the squad prize cup for sixty big jumps.", "J. Fox made five quick plays to win the big prize.", "Foxy diva Jennifer Lopez wasn’t baking my quiche.", "Cozy lummox gives smart squid who asks for job pen.", "By Jove, my quick study of lexicography won a prize.", "Levi Lentz packed my bag with six quarts of juice.", "Painful zombies quickly watch a jinxed graveyard.", "Fax back Jim’s Gwyneth Paltrow video quiz.", "As quirky joke, chefs won’t pay devil magic zebra tax.", "My girl wove six dozen plaid jackets before she quit.", "Then a cop quizzed Mick Jagger’s ex-wives briefly.", "Six big devils from Japan quickly forgot how to waltz.", "“Who am taking the ebonics quiz?”, the prof jovially axed.", "Why shouldn’t a quixotic Kazakh vampire jog barefoot?", "Grumpy wizards make a toxic brew for the jovial queen.", "Sixty zips were quickly picked from the woven jute bag.", "Big July earthquakes confound zany experimental vow.", "Foxy parsons quiz and cajole the lovably dim wiki-girl.", "Cute, kind, jovial, foxy physique, amazing beauty? Wowser!", "Have a pick: twenty-six letters — no forcing a jumbled quiz!", "A very big box sailed up then whizzed quickly from Japan.", "Battle of Thermopylae: Quick javelin grazed wry Xerxes.", "Jack quietly moved up front and seized the big ball of wax.", "Few black taxis drive up major roads on quiet hazy nights.", "Just poets wax boldly as kings and queens march over fuzz.", "Bored? Craving a pub quiz fix? Why, just come to the Royal Oak!", "Quincy Pondexter blocked five jams against the Wizards!", "Crazy Frederick bought many very exquisite opal jewels.", "A quivering Texas zombie fought republic linked jewelry.", "Grumpy wizards make toxic brew for the evil queen and jack.", "The job of waxing linoleum frequently peeves chintzy kids.", "Back in June we delivered oxygen equipment of the same size.", "Just keep examining every low bid quoted for zinc etchings.", "How razorback-jumping frogs can level six piqued gymnasts!", "A quick movement of the enemy will jeopardize six gunboats.", "All questions asked by five watched experts amaze the judge.", "Bobby Klun awarded Jayme sixth place for her very high quiz.", "The wizard quickly jinxed the gnomes before they vaporized.", "Zelda might fix the job growth plans very quickly on Monday.", "Zack Gappow saved the job requirement list for the six boys.", "Jackie will budget for the most expensive zoology equipment.", "Quirky spud boys can jam after zapping five worthy Polysixes.", "Jim quickly realized that the beautiful gowns are expensive."];
+},{}],"od3n":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -997,6 +999,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _pangrams = _interopRequireDefault(require("../../data/pangrams.json"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -1032,7 +1038,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Screen).call(this, props));
     _this.state = {
-      quote: 'Lorem ipsum...',
+      quote: _pangrams.default[Math.floor(Math.random() * _pangrams.default.length)],
       unlockMin: 10
     };
     return _this;
@@ -1046,7 +1052,7 @@ function (_Component) {
         className: "focus__screen"
       }, _react.default.createElement("h1", {
         className: "focus__screen__header"
-      }, "Are you sure you want to do that?"), _react.default.createElement("button", {
+      }, "Are you sure you want to do that?"), _react.default.createElement("p", null, this.state.quote), _react.default.createElement("button", {
         onClick: removeScreen
       }, "Yes, I'm sure"));
     }
@@ -1057,7 +1063,7 @@ function (_Component) {
 
 var _default = Screen;
 exports.default = _default;
-},{"react":"ccIB"}],"pILq":[function(require,module,exports) {
+},{"react":"ccIB","../../data/pangrams.json":"tGjN"}],"pILq":[function(require,module,exports) {
 "use strict";
 
 require("../styles/main.styl");

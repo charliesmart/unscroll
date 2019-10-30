@@ -16633,11 +16633,17 @@ chrome.runtime.onInstalled.addListener(function () {
  */
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  console.log(changeInfo);
+
   if (changeInfo.url) {
     // We need to get the hostname of the URL, so we use the
     // URL constructor to access it
     var url = new URL(changeInfo.url);
     handleBlock(url);
+  } else if (changeInfo.title && changeInfo.title.includes('http')) {
+    var _url = new URL(changeInfo.title);
+
+    handleBlock(_url);
   }
 });
 chrome.tabs.onActivated.addListener(function () {
@@ -16658,8 +16664,9 @@ function handleBlock(url) {
   chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], function (_ref) {
     var BLOCKED_SITES = _ref.BLOCKED_SITES,
         UNLOCKED_SITES = _ref.UNLOCKED_SITES;
-
     // If the hostname is in the block list, render the block page
+    console.log(UNLOCKED_SITES);
+
     if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
       renderBlocker();
     }
@@ -16694,6 +16701,7 @@ function renderBlocker() {
 
 function isCurrentlyBlocked(hostname, blocked, unblocked) {
   hostname = hostname.replace(/^www\./, '');
+  console.log(Date.now(), unblocked[hostname]);
   var isUnlocked = unblocked[hostname] && Date.now() < unblocked[hostname];
   return blocked.includes(hostname) && !isUnlocked;
 }

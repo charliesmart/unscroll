@@ -16636,25 +16636,35 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.url) {
     // We need to get the hostname of the URL, so we use the
     // URL constructor to access it
-    var url = new URL(changeInfo.url); // Get our current list of blocked sites from storage and check
-    // if it includes the current hostname
-
-    chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], function (_ref) {
-      var BLOCKED_SITES = _ref.BLOCKED_SITES,
-          UNLOCKED_SITES = _ref.UNLOCKED_SITES;
-      console.log(UNLOCKED_SITES); // If the hostname is in the block list, render the block page
-
-      if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
-        renderBlocker();
-      }
-    });
+    var url = new URL(changeInfo.url);
+    handleBlock(url);
   }
+});
+chrome.tabs.onActivated.addListener(function () {
+  chrome.tabs.getSelected(null, function (tab) {
+    var url = new URL(tab.url);
+    handleBlock(url);
+  });
 });
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.hostname) {
     unblock(request.hostname);
   }
 });
+
+function handleBlock(url) {
+  // Get our current list of blocked sites from storage and check
+  // if it includes the current hostname
+  chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], function (_ref) {
+    var BLOCKED_SITES = _ref.BLOCKED_SITES,
+        UNLOCKED_SITES = _ref.UNLOCKED_SITES;
+
+    // If the hostname is in the block list, render the block page
+    if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
+      renderBlocker();
+    }
+  });
+}
 
 function unblock(hostname) {
   hostname = hostname.replace(/^www\./, '');

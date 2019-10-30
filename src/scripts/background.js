@@ -17,25 +17,34 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       // We need to get the hostname of the URL, so we use the
       // URL constructor to access it
       let url = new URL(changeInfo.url);
-      
-      // Get our current list of blocked sites from storage and check
-      // if it includes the current hostname
-      chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], ({BLOCKED_SITES, UNLOCKED_SITES}) => {
-        console.log(UNLOCKED_SITES)
-        // If the hostname is in the block list, render the block page
-        if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
-          renderBlocker();
-        }
-      })
+      handleBlock(url)
     }
   }
 );
+
+chrome.tabs.onActivated.addListener(() => {
+   chrome.tabs.getSelected(null, (tab) => {
+      let url = new URL(tab.url);
+      handleBlock(url)
+   });
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.hostname) {
     unblock(request.hostname);
   }
 })
+
+function handleBlock(url) {
+  // Get our current list of blocked sites from storage and check
+  // if it includes the current hostname
+  chrome.storage.sync.get(['BLOCKED_SITES', 'UNLOCKED_SITES'], ({BLOCKED_SITES, UNLOCKED_SITES}) => {
+    // If the hostname is in the block list, render the block page
+    if (isCurrentlyBlocked(url.hostname, BLOCKED_SITES, UNLOCKED_SITES)) {
+      renderBlocker();
+    }
+  })
+}
 
 function unblock(hostname) {
   hostname = hostname.replace(/^www\./,'')

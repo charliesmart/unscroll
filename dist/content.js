@@ -1071,12 +1071,21 @@ var _Screen = _interopRequireDefault(require("./components/Screen"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var $wrap = document.createElement('div');
-document.body.appendChild($wrap);
-document.body.style.overflow = 'hidden';
+var $existingWrap = document.querySelector('.focus__wrap');
 
-_reactDom.default.render(_react.default.createElement(_Screen.default, {
-  removeScreen: removeScreen
-}), $wrap);
+if ($existingWrap === null) {
+  createScreen();
+}
+
+function createScreen() {
+  $wrap.classList.add('focus__wrap');
+  document.body.appendChild($wrap);
+  document.body.style.overflow = 'hidden';
+
+  _reactDom.default.render(_react.default.createElement(_Screen.default, {
+    removeScreen: removeScreen
+  }), $wrap);
+}
 
 function removeScreen() {
   document.body.style.overflow = null;

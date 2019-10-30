@@ -44,7 +44,10 @@ function renderBlocker() {
  * @return {boolean} - Whether or not the site is currently blocked
  */
 function isCurrentlyBlocked(hostname, blocked, unblocked) {
-  return blocked.includes(hostname) && !unblocked.includes(hostname); 
+  hostname = hostname.replace(/^www\./,'')
+  console.log(unblocked, blocked, hostname)
+  let isUnlocked = unblocked[hostname] && unblocked[hostname] > Date.now();
+  return blocked.includes(hostname) && !isUnlocked; 
 }
 
 /*
@@ -54,6 +57,6 @@ function isCurrentlyBlocked(hostname, blocked, unblocked) {
 function setDefaultSites(defaultSites) {
   chrome.storage.sync.set({
     BLOCKED_SITES: defaultSites,
-    UNLOCKED_SITES: [],
+    UNLOCKED_SITES: {},
   });
 }

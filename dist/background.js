@@ -172,7 +172,10 @@ function renderBlocker() {
 
 
 function isCurrentlyBlocked(hostname, blocked, unblocked) {
-  return blocked.includes(hostname) && !unblocked.includes(hostname);
+  hostname = hostname.replace(/^www\./, '');
+  console.log(unblocked, blocked, hostname);
+  var isUnlocked = unblocked[hostname] && unblocked[hostname] > Date.now();
+  return blocked.includes(hostname) && !isUnlocked;
 }
 /*
  * Use chrome storage to set initial list of blocked sites
@@ -183,7 +186,7 @@ function isCurrentlyBlocked(hostname, blocked, unblocked) {
 function setDefaultSites(defaultSites) {
   chrome.storage.sync.set({
     BLOCKED_SITES: defaultSites,
-    UNLOCKED_SITES: []
+    UNLOCKED_SITES: {}
   });
 }
 },{"../data/default_sites.json":"DcSP"}]},{},["bEr1"], null)

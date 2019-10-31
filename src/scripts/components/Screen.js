@@ -16,6 +16,8 @@ class Screen extends Component {
     }
 
     this.updateUserEntry = this.updateUserEntry.bind(this);
+
+    this.$submit = React.createRef();
   }
 
   updateUserEntry(e) {
@@ -25,17 +27,25 @@ class Screen extends Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.inputComplete && !prevState.inputComplete) {
+      this.$submit.current.focus();
+    }
+  }
+
   render() {
     let { removeScreen } = this.props;
 
     return (
       <div className="focus__screen">
-        <h1 className="focus__screen__header">
-          Are you sure you want to do that?
-        </h1>
-        <Quote prompt={this.state.quote} userEntry={this.state.userEntry}/>
-        <Input value={this.state.userEntry} onChange={this.updateUserEntry} />
-        <button className={this.state.inputComplete && 'active'} onClick={this.props.removeScreen}>Continue to {this.state.host} →</button>
+        <div className="focus__screen__contents">
+          <h1 className="focus__screen__header">
+            Are you sure you want to do that?
+          </h1>
+          <Quote prompt={this.state.quote} userEntry={this.state.userEntry}/>
+          <Input value={this.state.userEntry} onChange={this.updateUserEntry} />
+          <button ref={this.$submit} className={this.state.inputComplete && 'active'} onClick={this.props.removeScreen}>Continue to {this.state.host} →</button>
+        </div>
       </div>
     )
   }

@@ -1111,6 +1111,7 @@ function (_Component) {
       inputComplete: false
     };
     _this.updateUserEntry = _this.updateUserEntry.bind(_assertThisInitialized(_this));
+    _this.$submit = _react.default.createRef();
     return _this;
   }
 
@@ -1123,11 +1124,20 @@ function (_Component) {
       });
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.state.inputComplete && !prevState.inputComplete) {
+        this.$submit.current.focus();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var removeScreen = this.props.removeScreen;
       return _react.default.createElement("div", {
         className: "focus__screen"
+      }, _react.default.createElement("div", {
+        className: "focus__screen__contents"
       }, _react.default.createElement("h1", {
         className: "focus__screen__header"
       }, "Are you sure you want to do that?"), _react.default.createElement(_Quote.default, {
@@ -1137,9 +1147,10 @@ function (_Component) {
         value: this.state.userEntry,
         onChange: this.updateUserEntry
       }), _react.default.createElement("button", {
+        ref: this.$submit,
         className: this.state.inputComplete && 'active',
         onClick: this.props.removeScreen
-      }, "Continue to ", this.state.host, " \u2192"));
+      }, "Continue to ", this.state.host, " \u2192")));
     }
   }]);
 

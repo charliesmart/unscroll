@@ -9,6 +9,12 @@
   top: 0;
   left: 0;
 }
+.focus__screen__contents {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .focus__screen__header {
   font-family: 'Rubik', sans-serif;
   color: #3e4b62;
@@ -24,13 +30,22 @@
   border-radius: 5px;
   font-size: 34px;
   max-width: 500px;
+  line-height: 44px;
   margin-bottom: 15px;
+  user-select: none;
+}
+.focus__screen .prompt span {
+  pointer-events: none;
 }
 .focus__screen .prompt .correct {
   opacity: 0.4;
 }
 .focus__screen .prompt .incorrect {
-  color: #f00;
+  color: #ff5959;
+  text-shadow: #f4f5fa 0px 0px, #f4f5fa 0px 0px, #f4f5fa 3px 1.5px, #f4f5fa -3px 1.5px;
+  background-size: 1px 1em;
+  box-shadow: #f4f5fa 0px -2.5px inset, #ff5959 0px -5px inset;
+  display: inline;
 }
 .focus__screen button {
   border: none;
@@ -46,15 +61,21 @@
   opacity: 0.4;
   pointer-events: none;
   cursor: not-allowed;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 .focus__screen button.active {
   opacity: 1;
   pointer-events: all;
   cursor: pointer;
 }
+.focus__screen button:focus,
+.focus__screen button:hover {
+  outline: none;
+  box-shadow: 0 25px 20px rgba(62,75,98,0.12), 0 12px 12px rgba(62,75,98,0.19);
+}
 .focus__screen textarea {
   background-color: #fff;
+  resize: none;
   font-family: 'Rubik', sans-serif;
   color: #3e4b62;
   margin: auto;
